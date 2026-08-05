@@ -5,9 +5,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, PlayCircle, X, ExternalLink } from "lucide-react";
 import { useLocalStorage } from "@/lib/useLocalStorage";
 import { Button } from "@/components/ui/button";
-import dynamic from "next/dynamic";
-
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+// YouTube немесе Google Drive URL-ін embed URL-ге айналдырады
+function getYouTubeEmbedUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    let videoId = "";
+    if (u.hostname.includes("youtu.be")) {
+      videoId = u.pathname.slice(1);
+    } else if (u.pathname.startsWith("/live/")) {
+      videoId = u.pathname.split("/live/")[1].split("?")[0];
+    } else {
+      videoId = u.searchParams.get("v") || "";
+    }
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  } catch {
+    return url;
+  }
+}
 
 export interface Course {
   id: number;
@@ -282,12 +296,12 @@ export default function Courses() {
                     allowFullScreen
                   />
                 ) : (
-                  <ReactPlayer
-                    url={activeCourse.videoUrl}
-                    width="100%"
-                    height="100%"
-                    controls
-                    playing
+                  <iframe
+                    src={getYouTubeEmbedUrl(activeCourse.videoUrl)}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    title={activeCourse.title}
                   />
                 )}
               </div>
