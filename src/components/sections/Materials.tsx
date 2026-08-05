@@ -4,9 +4,24 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileText, FileImage, Presentation, PlaySquare, Download, Play, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import dynamic from "next/dynamic";
 
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
+// YouTube URL-ден video ID алу (youtube.com/watch?v=..., youtu.be/..., youtube.com/live/...)
+function getYouTubeEmbedUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    let videoId = "";
+    if (u.hostname.includes("youtu.be")) {
+      videoId = u.pathname.slice(1);
+    } else if (u.pathname.startsWith("/live/")) {
+      videoId = u.pathname.split("/live/")[1].split("?")[0];
+    } else {
+      videoId = u.searchParams.get("v") || "";
+    }
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  } catch {
+    return url;
+  }
+}
 
 type Material = {
   id: number;
@@ -141,13 +156,13 @@ export default function Materials() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              <div className="aspect-video w-full">
-                <ReactPlayer
-                  url={activeVideo.videoUrl}
-                  width="100%"
-                  height="100%"
-                  controls
-                  playing
+              <div className="aspect-video w-full bg-black">
+                <iframe
+                  src={getYouTubeEmbedUrl(activeVideo.videoUrl!)}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  title={activeVideo.title}
                 />
               </div>
             </motion.div>
