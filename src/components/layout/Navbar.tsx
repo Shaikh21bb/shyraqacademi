@@ -97,7 +97,10 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop CTA */}
-          <button className="hidden md:block glass-button px-6 py-2.5 rounded-full font-semibold text-sm">
+          <button
+            onClick={() => document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" })}
+            className="hidden md:block glass-button px-6 py-2.5 rounded-full font-semibold text-sm"
+          >
             Оқуды бастау
           </button>
 
@@ -209,7 +212,10 @@ export default function Navbar() {
                 {/* Divider */}
                 <div className="h-px bg-gradient-to-r from-transparent via-orange-200 to-transparent mb-5" />
                 <button
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => {
+                    setMobileOpen(false);
+                    setTimeout(() => document.getElementById("courses")?.scrollIntoView({ behavior: "smooth" }), 400);
+                  }}
                   className="glass-button w-full py-4 rounded-2xl font-bold text-[17px] flex items-center justify-center gap-2"
                 >
                   Оқуды бастау

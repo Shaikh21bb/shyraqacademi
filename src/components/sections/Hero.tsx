@@ -15,6 +15,10 @@ const PARTICLES = [
 ];
 
 export default function Hero() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       id="hero"
@@ -100,6 +104,7 @@ export default function Hero() {
           >
             <Button
               size="lg"
+              onClick={() => scrollTo("courses")}
               className="glass-button rounded-full text-base md:text-lg h-13 px-7 group font-bold"
             >
               Оқуды бастау
@@ -114,6 +119,7 @@ export default function Hero() {
             <Button
               variant="outline"
               size="lg"
+              onClick={() => scrollTo("history")}
               className="rounded-full text-base md:text-lg h-13 px-7 border-orange-200 text-orange-700 hover:bg-orange-50 hover:text-orange-800 hover:border-orange-300 transition-all duration-300"
             >
               Компания туралы
