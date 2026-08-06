@@ -43,15 +43,15 @@ const courses: Course[] = [
     id: 2,
     title: "Өнім туралы толық мәлімет",
     description: "Біздің AI платформа қалай жұмыс істейді?",
-    duration: "12 мин",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    duration: "3 мин 49 сек",
+    videoUrl: "https://youtu.be/NDxFoTcdLRE?si=-l7RRcukReFD6F-c",
   },
   {
     id: 3,
     title: "Сату негіздері мен техникасы",
     description: "Клиентпен тиімді қарым-қатынас орнату жолдары.",
     duration: "15 мин",
-    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    videoUrl: "https://youtu.be/w3k2Im3iY7s?si=XNi2iYz2QuLUHriM",
   },
   {
     id: 4,
