@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const team = [
   { id: 1, name: "Сандуғаш Е.", role: "Сату бөлімінің басшысы", department: "Сату Бөлімі", image: "/team1.jpg" },
-  { id: 2, name: "Мадияр Е.", role: "Shyraq.ai негізін қалаушысы", department: "IT & AI", image: "/team2.jpg" },
+  { id: 2, name: "Мадияр Е.", role: "IT & AI маманы", department: "IT & AI", image: "/team2.jpg" },
   { id: 3, name: "Алия М.", role: "Бас Маркетолог", department: "Маркетинг", image: "/team3.jpg" },
   { id: 4, name: "Назгүл Қ.", role: "Бас Куратор", department: "Клиенттермен Жұмыс", image: "/team4.jpg" },
 ];
