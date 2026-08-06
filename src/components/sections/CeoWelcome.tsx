@@ -56,9 +56,7 @@ export default function CeoWelcome() {
                 <Quote className="w-6 h-6 text-orange-500" />
               </div>
 
-              <blockquote className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 leading-snug tracking-tight">
-                «Біздің мақсатымыз — әрбір мұғалімге цифрлық көмекші сыйлап, <span className="gradient-text">білімнің шырағын маздату.</span>»
-              </blockquote>
+              <blockquote className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 leading-snug tracking-tight">«Біздің мақсатымыз — әрбір мұғалімге цифрлық көмекші сыйлап, <span className="gradient-text">білімнің шырағын бірге жағайық.</span>»</blockquote>
 
               <p className="text-gray-500 text-sm md:text-base leading-relaxed">
                 Шырақ академиясы әрбір жаңа менеджердің өз әлеуетін 100% ашуына барлық жағдай жасайды.
