@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 
 const team = [
@@ -39,12 +38,13 @@ export default function Team() {
                 whileHover={{ y: -6 }}
                 className="glass rounded-3xl p-6 flex flex-col items-center text-center group border border-orange-100/80 hover:border-orange-300 hover:shadow-[0_16px_48px_rgba(234,108,0,0.18)] transition-all duration-300 cursor-pointer"
               >
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white shadow-md overflow-hidden mb-4 group-hover:scale-105 transition-transform duration-300 bg-gradient-to-br from-orange-100 to-amber-50">
-                  <Image
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 border-white shadow-md overflow-hidden mb-4 group-hover:scale-105 transition-transform duration-300 bg-gradient-to-br from-orange-100 to-amber-50">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={member.image}
                     alt={member.name}
-                    fill
-                    className="object-cover object-center"
+                    className="w-full h-full object-cover object-center"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                   />
                 </div>
                 <h3 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-orange-600 transition-colors">{member.name}</h3>
