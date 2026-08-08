@@ -292,6 +292,7 @@ export default function Courses() {
                   <iframe
                     src={getGoogleDriveEmbedUrl(activeCourse.videoUrl)}
                     className="w-full h-full border-0"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
                     allow="autoplay; encrypted-media"
                     allowFullScreen
                   />
@@ -299,6 +300,7 @@ export default function Courses() {
                   <iframe
                     src={getYouTubeEmbedUrl(activeCourse.videoUrl)}
                     className="w-full h-full border-0"
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                     title={activeCourse.title}

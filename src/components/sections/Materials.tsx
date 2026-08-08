@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FileText, FileImage, Presentation, PlaySquare, Download, Play, X, Sparkles } from "lucide-react";
+import { FileText, FileImage, Presentation, PlaySquare, Download, Play, X, Sparkles, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // YouTube URL-ден video ID алу (youtube.com/watch?v=..., youtu.be/..., youtube.com/live/...)
@@ -28,7 +28,7 @@ type Material = {
   title: string;
   type: string;
   size: string;
-  icon: any;
+  icon: LucideIcon;
   color: string;
   bg: string;
   url?: string;
@@ -46,6 +46,22 @@ const materials: Material[] = [
 
 export default function Materials() {
   const [activeVideo, setActiveVideo] = useState<Material | null>(null);
+
+  // Поочерёдно скачивает все файловые материалы (видео исключается — это внешняя ссылка)
+  const downloadAll = () => {
+    const files = materials.filter((m) => m.url);
+    files.forEach((file, i) => {
+      // Небольшая задержка, чтобы браузер не блокировал множественные скачивания
+      setTimeout(() => {
+        const a = document.createElement("a");
+        a.href = file.url!;
+        a.download = file.title;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }, i * 400);
+    });
+  };
 
   return (
     <section id="materials" className="py-20 md:py-28 relative overflow-hidden">
@@ -81,7 +97,10 @@ export default function Materials() {
             transition={{ duration: 0.5 }}
             className="w-full sm:w-auto"
           >
-            <Button className="glass-button rounded-full px-7 h-12 text-sm font-bold w-full sm:w-auto flex items-center justify-center gap-2 shadow-[0_6px_25px_rgba(234,108,0,0.35)]">
+            <Button
+              onClick={downloadAll}
+              className="glass-button rounded-full px-7 h-12 text-sm font-bold w-full sm:w-auto flex items-center justify-center gap-2 shadow-[0_6px_25px_rgba(234,108,0,0.35)]"
+            >
               <Download className="w-4 h-4" />
               Барлығын жүктеп алу
             </Button>
@@ -160,6 +179,7 @@ export default function Materials() {
                 <iframe
                   src={getYouTubeEmbedUrl(activeVideo.videoUrl!)}
                   className="w-full h-full"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   title={activeVideo.title}

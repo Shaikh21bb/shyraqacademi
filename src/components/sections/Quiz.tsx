@@ -19,6 +19,28 @@ const questions = [
   { id: 10, q: "Біздің ұран қандай?", options: ["Тек алға", "Білімнің шырағын бірге жағайық", "Ең мықты платформа", "Сату біздің мақсатымыз"], a: 1 },
 ];
 
+// Логика конфетти вынесена из компонента, чтобы вызовы Date.now()/Math.random()
+// не считались «impure during render» (правило react-hooks/purity).
+function fireConfetti(totalQuestions: number, finalScore: number) {
+  const percentage = (finalScore / totalQuestions) * 100;
+  if (percentage < 80) return;
+
+  const duration = 3 * 1000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+  const interval = setInterval(() => {
+    const timeLeft = animationEnd - Date.now();
+
+    if (timeLeft <= 0) {
+      return clearInterval(interval);
+    }
+
+    const particleCount = 50 * (timeLeft / duration);
+    confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+  }, 250);
+}
+
 export default function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -42,29 +64,9 @@ export default function Quiz() {
         setSelectedAnswer(null);
       } else {
         setShowResult(true);
-        triggerConfetti(score + (index === questions[currentQuestion].a ? 1 : 0));
+        fireConfetti(questions.length, score + (index === questions[currentQuestion].a ? 1 : 0));
       }
     }, 1000);
-  };
-
-  const triggerConfetti = (finalScore: number) => {
-    const percentage = (finalScore / questions.length) * 100;
-    if (percentage >= 80) {
-      const duration = 3 * 1000;
-      const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-      const interval: any = setInterval(function () {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
-        }
-
-        const particleCount = 50 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
-      }, 250);
-    }
   };
 
   const resetQuiz = () => {
